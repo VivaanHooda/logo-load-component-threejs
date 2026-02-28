@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CC Logo Animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #000;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        #loading {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+            color: #fff;
+            font-family: system-ui;
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: opacity 0.5s;
+        }
+
+        #loading.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #intro-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: #000;
+            transition: opacity 0.3s;
+        }
+
+        #website {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #111;
+            color: #fff;
+            font-family: system-ui;
+        }
+
+        #website h1 {
+            font-size: 2rem;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Website content (revealed after animation) -->
+    <div id="website">
+        <h1>Welcome to the website</h1>
+    </div>
+
+    <!-- Animation overlay -->
+    <div id="intro-overlay">
+        <div id="loading">Loading…</div>
+    </div>
+
+    <script type="importmap">
+    { "imports": { "three": "https://unpkg.com/three@0.163.0/build/three.module.js" } }
+  </script>
+
+    <script type="module">
+        import { initLogoAnimation } from './logoAnimation.js';
+
+        initLogoAnimation({
+            svgPath: 'cclogo.svg',
+            onComplete: () => {
+                console.log('Intro animation complete');
+            },
+        }).catch(err => {
+            console.error(err);
+            document.getElementById('loading').textContent = 'Error loading animation.';
+        });
+    </script>
+</body>
+
+</html>
